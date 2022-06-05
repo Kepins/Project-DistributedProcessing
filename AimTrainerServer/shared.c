@@ -80,6 +80,9 @@ void update(int player_id){
 	else{
 		shared.curr_x = (rand() % (WIDTH - 2 * RADIUS)) + RADIUS;
 		shared.curr_y = (rand() % (HEIGHT - 2 * RADIUS)) + RADIUS;
+		while(shared.curr_y<50){
+			shared.curr_y = (rand() % (HEIGHT - 2 * RADIUS)) + RADIUS;
+		}
 		shared.curr_id += 1;
 		for(int i=0;i<shared.num_players;i++){
 			//send information about player who scored point
@@ -114,9 +117,13 @@ void init_players_ready(){
 		}
 	}
 	if(all_ready && !shared.is_running){
+
 		shared.is_running = 1;
 		shared.curr_x = (rand() % (WIDTH - 2 * RADIUS)) + RADIUS;
 		shared.curr_y = (rand() % (HEIGHT - 2 * RADIUS)) + RADIUS;
+		while(shared.curr_y<50){
+			shared.curr_y = (rand() % (HEIGHT - 2 * RADIUS)) + RADIUS;
+		}
 		for(int i=0;i<shared.num_players;i++){
 			//send information about the game starting
 			Message* message = (Message*)malloc(sizeof(Message));
@@ -124,7 +131,7 @@ void init_players_ready(){
 			sem_wait(&shared.players[i]->queue_sem);
 			pushMessage(&shared.players[i]->messagesqueue, message);
 			sem_post(&shared.players[i]->queue_sem);
-			
+
 			//send information about new point
 			message = (Message*)malloc(sizeof(Message));
 			message->type = draw;

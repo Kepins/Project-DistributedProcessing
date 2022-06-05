@@ -66,7 +66,7 @@ void* connection_handler(void *socket_desc) {
 				client_messages[read_size] = '\0';
 				
 				//debug
-				fprintf(stderr, "%s\n", client_messages);
+				fprintf(stderr, "%d %s\n",player->id,client_messages);
 				
 				
 				Message msg;
@@ -107,6 +107,9 @@ void* connection_handler(void *socket_desc) {
 				write(sock , server_message , strlen(server_message));
 				if(msg->type == end){
 					ended = 1;	
+				}
+				if(msg->type == 3){
+					sleep(5);
 				}
 				free(msg);
 				memset(server_message, 0, MESSAGE_BUFFER);
@@ -175,6 +178,7 @@ int main(int argc, char *argv[]) {
 	for(int i=0;i<threads_count;i++)
 	{
 		pthread_join(*thread_ids[i] , NULL);
+		free(thread_ids[i]);
 	}
 	sem_destroy(&connection_sem);
 	deinit();

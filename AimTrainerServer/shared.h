@@ -9,7 +9,7 @@
 
 
 #define MAX_PLAYERS 10
-#define POINTS_WINNING 1
+#define POINTS_WINNING 10
 #define WIDTH 1024
 #define HEIGHT 720
 #define RADIUS 20
